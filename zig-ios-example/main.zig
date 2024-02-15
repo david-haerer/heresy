@@ -1,11 +1,6 @@
 const std = @import("std");
 
-extern "c" fn appMain() isize;
-
-export fn dummyMsg() [*:0]const u8 {
-    return "Hello from Zig!";
-}
-
-pub fn main() void {
-    _ = appMain();
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+    try stdout.print("Hello, world!\n", .{});
 }
