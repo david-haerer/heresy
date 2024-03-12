@@ -1,0 +1,13 @@
+#!/bin/sh
+
+idevicepair pair >/dev/null 2>&1 ||
+	printf "1. Connect the iPhone via USB.\n2. Open the iPhone and tab 'Trust'.\n3. Then enter the device code.\n"
+
+until idevicepair pair >/dev/null 2>&1; do
+	sleep 0.5
+done
+
+device=$(ideviceinfo -k DeviceName)
+mkdir -p "$HOME/$device"
+fusermount -u "$HOME/$device" > /dev/null 2>&1
+ifuse "$HOME/$device"
